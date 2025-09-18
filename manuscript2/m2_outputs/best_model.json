@@ -1,0 +1,17 @@
+{
+  "best_model": "LSTM",
+  "metric": "macro_f1",
+  "macro_f1": 0.997725851384388,
+  "accuracy": 0.9977272727272727,
+  "features": [
+    "Nitrogen",
+    "Phosphorus",
+    "Potassium",
+    "Temperature",
+    "Humidity",
+    "pH_Value",
+    "Rainfall"
+  ],
+  "target": "Crop",
+  "random_state": 42
+}

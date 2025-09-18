@@ -1,0 +1,5 @@
+{
+  "arch": "LSTM",
+  "in_dim": 7,
+  "n_classes": 22
+}

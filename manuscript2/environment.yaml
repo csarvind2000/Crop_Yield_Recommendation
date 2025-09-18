@@ -1,0 +1,20 @@
+name: cropAI
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - joblib
+  - requests
+  - jupyterlab
+  - statsmodels   # needed if you want lowess plots in EDA
+  - pip:
+      - torch
+      - torchvision
+      - torchaudio
