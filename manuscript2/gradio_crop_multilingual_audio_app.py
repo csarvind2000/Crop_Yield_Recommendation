@@ -21,6 +21,8 @@ import requests
 import joblib
 from PIL import Image, ImageDraw
 import gradio as gr
+from datetime import datetime
+
 
 # -------- Optional deps --------
 # DL backbone (only if your best model is DL)
@@ -261,10 +263,20 @@ def tts_gtts(text: str, language_name: str) -> Tuple[Optional[str], Optional[str
     try:
         clean = strip_markdown(text)
         # gTTS writes mp3; Gradio can play it directly
-        tmp = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False)
+       
+        out_dir = Path("tts_audio")
+        out_dir.mkdir(exist_ok=True)
+
+        # Add timestamp (YYYYMMDD_HHMMSS) to filename
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        out_path = out_dir / f"reco_{language_name}_{ts}.mp3"
+
         tts = gTTS(clean, lang=lang_code, slow=False)
-        tts.save(tmp.name)
-        return tmp.name, None
+        tts.save(str(out_path))
+
+        return str(out_path), None
+
+
     except Exception as e:
         return None, f"TTS error: {e}"
 
@@ -428,7 +440,7 @@ def build_interface(model_dir: Path, images_dir: Path, ollama_model: str, port: 
                     ask   = gr.Checkbox(label="Generate recommendations", value=True)
                     lang  = gr.Dropdown(choices=LANG_CHOICES, value="English", label="Recommendation Language")
                 with gr.Row():
-                    speak = gr.Checkbox(label="Speak recommendations (Text-to-Speech)", value=False)
+                    speak = gr.Checkbox(label="Voice based recommendations", value=False)
 
                 btn = gr.Button("Predict", variant="primary")
 
